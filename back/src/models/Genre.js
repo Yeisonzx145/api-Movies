@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const genreSchema = new mongoose.Schema({
-    type:String
+    typeGenre:String
 })
 
 const Genre = mongoose.model("Genre",genreSchema);

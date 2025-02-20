@@ -7,7 +7,14 @@ module.exports = {
         return movies
     },
 
-    createMovie : async (movie)=>{
-        return movie    
+    createMovie : async (movie)=>{ 
+        const newMovie = await Movie.create(movie)
+        return newMovie 
+    },
+
+    byId : async (id)=>{
+        const movie = await Movie.findById(id);
+
+        return movie;
     }
 }
