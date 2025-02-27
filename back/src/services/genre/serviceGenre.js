@@ -7,13 +7,20 @@ module.exports = {
         return genres;
     },
 
-    createGenre : async (typeGenre) => {
-        const newGenre = await Genre.create(typeGenre)
+    createGenre : async ({typeGenre}) => {
+        
+        if(await Genre.findOne({typeGenre})){
+            throw({message:"El genero ya se encuentra registrado", statusCode: 400})
+            
+        }
+        const newGenre = await Genre.create({typeGenre})
         return newGenre
     },
 
     byNameGenre : async (name) =>{
-        const byName = await Genre.findOne({typeGenre:name});
+        const byName = await Genre.findOne({typeGenre:name}).populate('movie', '_id title');
+
+        if (!byName) throw({message:`${name} no se encontro`, statusCode: 400})
 
         return byName;
     },
