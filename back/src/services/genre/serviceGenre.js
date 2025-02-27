@@ -29,8 +29,15 @@ module.exports = {
         const genre = await Genre.findById(idGenre);
         const movie = await Movie.findById(idMovie);
 
-        genre.movie = idMovie;
-        movie.genre = idGenre;
+        if(!genre || !movie) throw({message:"No se encontro alguno de los datos", statusCode:400});
+        
+        genre.movie.forEach((id)=>{
+            console.log(id);
+            if(id == idMovie)throw({message:"ya se encuentra registrado", statusCode:400});   
+        })
+        
+        genre.movie.push(idMovie);
+        movie.genre.push(idGenre);
 
         await genre.save();
         await movie.save();
